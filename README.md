@@ -87,3 +87,13 @@ Family-Harmony-Dashboard/
 ### Deployment
 - [ ] Deploy the Django backend and React frontend on a suitable platform (e.g., Heroku, AWS).
 
+## After proof of concept
+### Explore Mobile App Development (Future Step)
+- [ ] Research mobile app development frameworks (e.g., React Native, Flutter).
+- [ ] Evaluate the feasibility of converting the existing React app to a mobile app.
+- [ ] Plan the user interface and experience for mobile.
+- [ ] Determine additional features or adjustments needed for mobile usability.
+- [ ] Consider the integration of mobile-specific features (e.g., push notifications, offline access).
+- [ ] Assess the budget and resources required for mobile app development.
+
+
