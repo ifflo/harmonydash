@@ -35,30 +35,33 @@ The Family Harmony Dashboard is a specialized app designed to help families mana
 - **APIs**: YNAB, Twilio
 
 ## Project Structure
-
-````
-Family-Harmony-Dashboard/
-├── backend/ (Django project)
-│   ├── familyharmony/ (main project folder)
-│   │   ├── settings.py (project settings)
-│   │   ├── urls.py (project URL declarations)
-│   │   └── wsgi.py (WSGI configuration)
-│   ├── app/ (main Django app)
-│   │   ├── migrations/ (database migrations)
-│   │   ├── admin.py (admin site configuration)
-│   │   ├── models.py (database models)
-│   │   ├── views.py (views for the app)
-│   │   └── tests.py (test cases for the app)
-│   └── manage.py (Django command-line utility)
-├── frontend/ (React project)
-│   ├── src/
-│   │   ├── components/ (React components)
-│   │   ├── App.js (main React component)
-│   │   └── index.js (React entry point)
-│   ├── public/
-│   └── package.json (npm package manager file)
-├── README.md
-└── requirements.txt (Python dependencies)
+```plaintext
+harmonydash/
+├── app/                    # Main Django application
+│   ├── migrations/         # Database migrations
+│   ├── admin.py            # Admin site configuration
+│   ├── models.py           # Database models
+│   │   ├── user_profile.py # Model for user profiles
+│   │   ├── schedule.py     # Model for user schedules
+│   │   ├── financial_info.py # Model for financial information
+│   │   └── task.py         # Model for tasks and chores
+│   ├── views.py            # Views for the application
+│   ├── tests.py            # Test cases for the app
+│   └── urls.py             # URL configurations for the app
+├── harmonydash/            # Django project folder
+│   ├── settings.py         # Project settings
+│   ├── urls.py             # Project URL declarations
+│   └── wsgi.py             # WSGI configuration for deployment
+├── frontend/               # React frontend application
+│   ├── src/                # Source files for React
+│   │   ├── components/     # React components
+│   │   ├── App.js          # Main React component
+│   │   └── index.js        # Entry point for React app
+│   └── public/             # Public assets for React app
+├── venv/                   # Virtual environment for the project
+├── manage.py               # Django command-line utility script
+├── README.md               # Project documentation
+└── requirements.txt        # Python dependencies
 ````
 
 ## Getting Started Checklist
