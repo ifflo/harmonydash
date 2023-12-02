@@ -1,5 +1,11 @@
-from django.http import HttpResponse
+from rest_framework import generics
+from .models import UserProfile
+from .serializers import UserProfileSerializer
 
 
-def home(request):
-    return HttpResponse("Welcome!")
+class UserProfileList(generics.ListCreateAPIView):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+
+
+# Similarly, create views for other models/endpoints

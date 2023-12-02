@@ -67,9 +67,17 @@ harmonydash/
 ## Getting Started Checklist
 
 ### Set up Django Backend
-- [ ] Initialize Django project (`django-admin startproject familyharmony`).
-- [ ] Create Django app within the project (`python manage.py startapp app`).
-- [ ] Design and define database models in `app/models.py`.
+- [x] Initialize Django project (`django-admin startproject harmonydash`).
+- [x] Create Django app within the project (`python manage.py startapp app`).
+- [x] Design and define database models in `app/models.py`.
+- [x] Set up and configure a SQLite3 database (default for Django).
+- [ ] Migrate to PostgreSQL if the project scales beyond personal use (Future Task).
+
+### Prepare Backend for React Frontend
+- [ ] Create RESTful APIs using Django REST Framework.
+- [ ] Ensure proper CORS configuration for secure AJAX requests.
+- [ ] Implement token-based authentication for API access.
+- [ ] Test API endpoints for CRUD operations.
 
 ### Develop React Frontend
 - [ ] Initialize React application (`npx create-react-app frontend`).
@@ -80,8 +88,11 @@ harmonydash/
 - [ ] Implement the Twilio API for SMS reminders.
 
 ### Database Configuration
-- [ ] Set up and configure a PostgreSQL database.
-- [ ] Connect Django to the database via the settings in `familyharmony/settings.py`.
+- [x] Connect Django to the SQLite3 database via the settings in `harmonydash/settings.py`.
+
+### Create Views and URLs
+- [x] Define views in `app/views.py`.
+- [x] Set up URL patterns in `app/urls.py` and `harmonydash/urls.py`.
 
 ### Testing
 - [ ] Write test cases for each Django app component in `app/tests.py`.
@@ -90,7 +101,6 @@ harmonydash/
 ### Deployment
 - [ ] Deploy the Django backend and React frontend on a suitable platform (e.g., Heroku, AWS).
 
-## After proof of concept
 ### Explore Mobile App Development (Future Step)
 - [ ] Research mobile app development frameworks (e.g., React Native, Flutter).
 - [ ] Evaluate the feasibility of converting the existing React app to a mobile app.
@@ -98,5 +108,4 @@ harmonydash/
 - [ ] Determine additional features or adjustments needed for mobile usability.
 - [ ] Consider the integration of mobile-specific features (e.g., push notifications, offline access).
 - [ ] Assess the budget and resources required for mobile app development.
-
 
