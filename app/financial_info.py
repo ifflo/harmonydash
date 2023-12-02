@@ -1,6 +1,7 @@
 from django.db import models
 from .user_profile import UserProfile
 
+
 class FinancialInfo(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     bill_name = models.CharField(max_length=100)
