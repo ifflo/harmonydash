@@ -1,5 +1,5 @@
 from django.db import models
-from .user_profile import UserProfile
+from app.models.user_profile import UserProfile
 
 
 class Task(models.Model):
