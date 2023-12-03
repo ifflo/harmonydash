@@ -72,42 +72,46 @@ harmonydash/
 - [x] Initialize Django project (`django-admin startproject harmonydash`).
 - [x] Create Django app within the project (`python manage.py startapp app`).
 - [x] Design and define database models in `app/models.py`.
-- [x] Set up and configure a SQLite3 database (default for Django).
+- [x] Set up and configure a SQLite3 database.
 - [ ] Migrate to PostgreSQL if the project scales beyond personal use (Future Task).
-
-### Prepare Backend for React Frontend
-- [ ] Create RESTful APIs using Django REST Framework.
-- [ ] Ensure proper CORS configuration for secure AJAX requests.
-- [ ] Implement token-based authentication for API access.
-- [ ] Test API endpoints for CRUD operations.
+- [x] Create RESTful API endpoints using Django REST Framework.
+- [ ] Implement token-based authentication for API access (Future Task).
 
 ### Develop React Frontend
-- [ ] Initialize React application (`npx create-react-app frontend`).
-- [ ] Create basic React components for the user interface in the `src/components/` directory.
+- [x] Initialize React application (`npx create-react-app frontend`).
+- [x] Create basic React components for the user interface.
+- [x] Implement state management and API integration in React components.
+- [ ] Add routing to the React app with `react-router-dom` (Future Task).
+- [ ] Implement user authentication in the frontend (Future Task).
+- [ ] Optimize frontend performance and state management (Future Task).
 
 ### Integrate APIs
-- [ ] Connect to the YNAB API for financial data management.
-- [ ] Implement the Twilio API for SMS reminders.
+- [ ] Connect to the YNAB API for financial data management (Future Task).
+- [ ] Implement the Twilio API for SMS reminders (Future Task).
 
 ### Database Configuration
 - [x] Connect Django to the SQLite3 database via the settings in `harmonydash/settings.py`.
 
-### Create Views and URLs
-- [x] Define views in `app/views.py`.
-- [x] Set up URL patterns in `app/urls.py` and `harmonydash/urls.py`.
-
 ### Testing
-- [ ] Write test cases for each Django app component in `app/tests.py`.
-- [ ] Run tests to ensure stability and functionality.
+- [ ] Write test cases for Django app components (`app/tests.py`).
+- [ ] Write tests for React components (Future Task).
+- [ ] Perform end-to-end testing for the entire application (Future Task).
 
 ### Deployment
-- [ ] Deploy the Django backend and React frontend on a suitable platform (e.g., Heroku, AWS).
+- [ ] Deploy the Django backend on a suitable platform (e.g., Heroku, AWS) (Future Task).
+- [ ] Deploy the React frontend on a suitable platform (e.g., Netlify, Vercel) (Future Task).
 
 ### Explore Mobile App Development (Future Step)
-- [ ] Research mobile app development frameworks (e.g., React Native, Flutter).
-- [ ] Evaluate the feasibility of converting the existing React app to a mobile app.
-- [ ] Plan the user interface and experience for mobile.
-- [ ] Determine additional features or adjustments needed for mobile usability.
-- [ ] Consider the integration of mobile-specific features (e.g., push notifications, offline access).
-- [ ] Assess the budget and resources required for mobile app development.
+- [ ] Research mobile app development frameworks (e.g., React Native, Flutter) (Future Task).
+- [ ] Evaluate the feasibility of converting the React app to a mobile app (Future Task).
+- [ ] Plan the user interface and experience for mobile (Future Task).
+- [ ] Determine additional features or adjustments needed for mobile usability (Future Task).
+- [ ] Consider the integration of mobile-specific features (e.g., push notifications, offline access) (Future Task).
+- [ ] Assess the budget and resources required for mobile app development (Future Task).
 
+### Additional Tasks
+- [ ] Implement a comprehensive error handling strategy for both backend and frontend (Future Task).
+- [ ] Develop a feature for dynamic schedule adjustments and notifications (Future Task).
+- [ ] Create a dashboard view in the frontend for financial overview (Future Task).
+- [ ] Integrate a calendar component for better schedule visualization (Future Task).
+- [ ] Set up a Continuous Integration/Continuous Deployment (CI/CD) pipeline (Future Task).
