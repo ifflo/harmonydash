@@ -31,7 +31,7 @@ The Family Harmony Dashboard is a specialized app designed to help families mana
 
 - **Frontend**: React
 - **Backend**: Django
-- **Database**: PostgreSQL
+- **Database**: SQLite3
 - **APIs**: YNAB, Twilio
 
 ## Project Structure
