@@ -23,6 +23,8 @@ help: ## Show this help message
 
 setup: venv requirements migrate ## Set up the project after a fresh clone
 venv: $(VENV_NAME)/bin/activate ## Create a virtual environment for the project
+tree: ## Target to view the project structure
+	@tree -I '__pycache__|venv|node_modules' -L 2 > tree_structure.txt
 activate: ## Activate the virtual environment
 	@echo "Activating virtual environment..."
 	@$(VENV_ACTIVATE)

@@ -1,0 +1,36 @@
+.
+├── Makefile
+├── README.md
+├── app
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── migrations
+│   ├── models
+│   ├── serializers.py
+│   ├── tasks.py
+│   ├── tests
+│   ├── tests.py
+│   ├── urls.py
+│   ├── utils
+│   └── views.py
+├── db.sqlite3
+├── frontend
+│   ├── README.md
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   └── src
+├── harmonydash
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── celery.py
+│   ├── settings.py
+│   ├── urls.py
+│   ├── views.py
+│   └── wsgi.py
+├── manage.py
+├── requirements.txt
+└── tree_structure.txt
+
+10 directories, 24 files
