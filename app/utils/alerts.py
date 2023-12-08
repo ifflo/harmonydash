@@ -1,5 +1,5 @@
 # app/utils/alerts.py
-from .financial_processing import analyze_financial_data
+from .financial_analysis import analyze_financial_data
 
 
 def check_budget_thresholds():
