@@ -9,7 +9,7 @@ class YNABAPITest(TestCase):
         """ Test connection to the YNAB API """
         api_key = os.getenv('YNAB_API_KEY')
         headers = {'Authorization': f'Bearer {api_key}'}
-        response = requests.get('https://api.youneedabudget.com/v1/user', headers=headers)
+        response = requests.get('https://api.ynab.com/v1/user', headers=headers)
 
         # Check if the response status code is 200 (OK)
         self.assertEqual(response.status_code, 200)

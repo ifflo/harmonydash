@@ -45,7 +45,7 @@ run: ## Run the Django development server
 celery: ## Run Celery worker (make sure RabbitMQ is running)
 	celery -A harmonydash worker --loglevel=info
 test: ## Run tests
-	$(MANAGE) test
+	$(MANAGE) test app.tests
 clean: ## Clean the project (remove cached files)
 	find . -type f -name '*.pyc' -delete
 	find . -type f -name '*.pyo' -delete
