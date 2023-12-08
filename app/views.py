@@ -1,6 +1,6 @@
-from rest_framework import generics
-from .models import UserProfile
-from .serializers import UserProfileSerializer
+from rest_framework import generics, viewsets
+from .models import UserProfile, FinancialSettings, Transaction
+from .serializers import UserProfileSerializer, FinancialSettingsSerializer, TransactionSerializer
 
 
 class UserProfileList(generics.ListCreateAPIView):
@@ -8,4 +8,12 @@ class UserProfileList(generics.ListCreateAPIView):
     serializer_class = UserProfileSerializer
 
 
+class FinancialSettingsViewSet(viewsets.ModelViewSet):
+    queryset = FinancialSettings.objects.all()
+    serializer_class = FinancialSettingsSerializer
+
+
+class TransactionViewSet(viewsets.ModelViewSet):
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
 # Similarly, create views for other models/endpoints
