@@ -11,27 +11,40 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
 import os
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Define constants for environment variables
+RABBITMQ_DEFAULT_USER = os.getenv('RABBITMQ_DEFAULT_USER', 'default_user')
+RABBITMQ_DEFAULT_PASS = os.getenv('RABBITMQ_DEFAULT_PASS', 'default_pass')
+RABBITMQ_DEFAULT_VHOST = os.getenv('RABBITMQ_DEFAULT_VHOST', 'default_vhost')
+DJANGO_SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your_default_secret_key')
+YNAB_API_KEY = os.getenv('YNAB_API_KEY', 'your_default_ynab_api_key')
+
+# Use these constants in your configurations
+CELERY_BROKER_URL = f'amqp://{RABBITMQ_DEFAULT_USER}:{RABBITMQ_DEFAULT_PASS}@localhost:5672/{RABBITMQ_DEFAULT_VHOST}'
+CELERY_RESULT_BACKEND = 'django-db'  # or 'redis://localhost:6379/0', etc.
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+SECRET_KEY = DJANGO_SECRET_KEY
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-YNAB_API_KEY = os.getenv('YNAB_API_KEY')
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +55,7 @@ INSTALLED_APPS = [
     'app',
     'rest_framework',
     'corsheaders',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
