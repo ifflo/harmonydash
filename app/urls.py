@@ -1,7 +1,7 @@
 # app/urls.py
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import FinancialSettingsViewSet, SalaryViewSet, BonusViewSet, TransactionViewSet
+from .views import FinancialSettingsViewSet, FinancialSummaryView, SalaryViewSet, BonusViewSet, TransactionViewSet
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
@@ -14,4 +14,5 @@ router.register(r'all-transactions', TransactionViewSet)
 # The API URLs are now determined automatically by the router.
 urlpatterns = [
     path('', include(router.urls)),
+    path('api/financial-summary/', FinancialSummaryView.as_view(), name='financial-summary'),
 ]

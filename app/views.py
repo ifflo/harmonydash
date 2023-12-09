@@ -12,6 +12,8 @@ from django.http import JsonResponse
 from django.views import View
 from .utils.financial_analysis import analyze_user_transactions
 from django.contrib.auth.models import User
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 
 # Existing ViewSets
@@ -41,11 +43,6 @@ class BonusViewSet(viewsets.ModelViewSet):
     serializer_class = BonusSerializer
 
 
-class TransactionViewSet(viewsets.ModelViewSet):
-    queryset = Transaction.objects.all()
-    serializer_class = TransactionSerializer
-
-
 # Other views
 class FinancialDataView(View):
     def get(self, request, *args, **kwargs):
@@ -57,3 +54,10 @@ class FinancialDataView(View):
         alerts = analyze_user_transactions(user)
 
         return JsonResponse({'alerts': alerts})
+
+
+class FinancialSummaryView(APIView):
+    def get(self, request, format=None):
+        # Your logic to gather financial summary data
+        data = {'income': 1000, 'expenses': 500}  # Example data
+        return Response(data)
