@@ -14,6 +14,8 @@ from .utils.financial_analysis import analyze_user_transactions
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.db.models import Sum
+from django.utils import timezone
 
 
 # Existing ViewSets
@@ -61,3 +63,36 @@ class FinancialSummaryView(APIView):
         # Your logic to gather financial summary data
         data = {'income': 1000, 'expenses': 500}  # Example data
         return Response(data)
+
+
+class MonthlyOverview(APIView):
+    def get(self, request, format=None):
+        current_month = timezone.now().month
+        total_income = Transaction.objects.filter(
+            transaction_type='income', date__month=current_month
+        ).aggregate(Sum('amount'))['amount__sum'] or 0
+        total_expenses = Transaction.objects.filter(
+            transaction_type='expense', date__month=current_month
+        ).aggregate(Sum('amount'))['amount__sum'] or 0
+
+        data = {
+            'income': total_income,
+            'expenses': total_expenses
+        }
+        return Response(data)
+
+
+class SpendingByCategory(APIView):
+    def get(self, request, format=None):
+        categories = (Transaction.objects.filter(transaction_type='expense')
+                      .values('category').annotate(total=Sum('amount')).order_by('-total'))
+        return Response(list(categories))
+
+
+class TrendAnalysis(APIView):
+    def get(self, request, format=None):
+        trends = (Transaction.objects.values('date')
+                  .annotate(income=Sum('amount',
+                                       filter=Q(transaction_type='income')),
+                            expenses=Sum('amount', filter=Q(transaction_type='expense'))).order_by('date'))
+        return Response(list(trends))
