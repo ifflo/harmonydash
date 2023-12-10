@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Table from 'react-bootstrap/Table';
 
 const TrendAnalysis = () => {
     const [trends, setTrends] = useState([]);
@@ -28,9 +29,22 @@ const TrendAnalysis = () => {
     return (
         <div>
             <h2>Trend Analysis</h2>
-            {trends.map((trend, index) => (
-                <p key={index}>{trend.month}: ${trend.amount}</p>
-            ))}
+            <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {trends.map((trend, index) => (
+                        <tr key={index}>
+                            <td>{trend.month}</td>
+                            <td>${trend.amount}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
         </div>
     );
 };

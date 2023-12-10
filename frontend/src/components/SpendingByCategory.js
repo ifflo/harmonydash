@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 const SpendingByCategory = () => {
     const [categories, setCategories] = useState([]);
@@ -28,11 +29,13 @@ const SpendingByCategory = () => {
     return (
         <div>
             <h2>Spending by Category</h2>
-            <ul>
-                {categories.map(category => (
-                    <li key={category.name}>{category.name}: ${category.amount}</li>
+            <ListGroup>
+                {categories.map((category) => (
+                    <ListGroup.Item key={category.name}>
+                        {category.name}: ${category.amount}
+                    </ListGroup.Item>
                 ))}
-            </ul>
+            </ListGroup>
         </div>
     );
 };

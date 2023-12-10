@@ -184,3 +184,4 @@ venv.bak/
 # Other files and folders to ignore
 .DS_Store
 Thumbs.db
+!/node_modules/

@@ -5,20 +5,32 @@ import { getUserProfiles } from '../apiService';
 const useUserProfiles = () => {
     const [userProfiles, setUserProfiles] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
+        let isMounted = true;
+
         getUserProfiles()
             .then(response => {
-                setUserProfiles(response.data);
-                setLoading(false);
+                if (isMounted) {
+                    setUserProfiles(response.data);
+                    setLoading(false);
+                }
             })
             .catch(error => {
-                console.error('Error fetching user profiles!', error);
-                setLoading(false);
+                if (isMounted) {
+                    console.error('Error fetching user profiles!', error);
+                    setError(error);
+                    setLoading(false);
+                }
             });
+
+        return () => {
+            isMounted = false;
+        };
     }, []);
 
-    return { userProfiles, loading };
+    return { userProfiles, loading, error };
 };
 
 export default useUserProfiles;

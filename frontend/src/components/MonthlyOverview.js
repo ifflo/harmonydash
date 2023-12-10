@@ -1,7 +1,8 @@
 // src/components/MonthlyOverview.js
 import React, { useState, useEffect } from 'react';
+import Card from 'react-bootstrap/Card';
 
-const MonthlyOverview = () => {
+const MonthlyOverview = ({ income, expenses }) => {
     const [financialData, setFinancialData] = useState({ income: 0, expenses: 0 });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -27,11 +28,13 @@ const MonthlyOverview = () => {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div>
-            <h2>Monthly Overview</h2>
-            <p>Total Income: ${financialData.income}</p>
-            <p>Total Expenses: ${financialData.expenses}</p>
-        </div>
+        <Card className="text-center">
+            <Card.Header as="h5">Monthly Overview</Card.Header>
+            <Card.Body>
+                <Card.Title>Total Income: ${income}</Card.Title>
+                <Card.Title>Total Expenses: ${expenses}</Card.Title>
+            </Card.Body>
+        </Card>
     );
 };
 
