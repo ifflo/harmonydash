@@ -7,7 +7,7 @@ MANAGE=$(PYTHON) manage.py
 
 # Virtual environment
 VENV_NAME=venv
-VENV_ACTIVATE=.$(VENV_NAME)/bin/activate
+VENV_ACTIVATE=$(VENV_NAME)/bin/activate
 VENV_BIN=$(VENV_NAME)/bin
 
 # Make sure commands are run inside the virtual environment
