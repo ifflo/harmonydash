@@ -35,6 +35,17 @@
 │   │   └── ynab_client.py
 │   └── views.py
 ├── db.sqlite3
+├── docs
+│   ├── Makefile
+│   ├── build
+│   │   ├── doctrees
+│   │   └── html
+│   ├── make.bat
+│   └── source
+│       ├── _static
+│       ├── _templates
+│       ├── conf.py
+│       └── index.rst
 ├── frontend
 │   ├── README.md
 │   ├── build
@@ -75,10 +86,11 @@
 │   ├── urls.py
 │   ├── views.py
 │   └── wsgi.py
+├── history.txt
 ├── manage.py
 ├── package-lock.json
 ├── package.json
 ├── requirements.txt
 └── tree_structure.txt
 
-14 directories, 68 files
+21 directories, 73 files

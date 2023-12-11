@@ -1,0 +1,286 @@
+commit d19f0d615097fceb2bcb8629bd7c0314e13d376e
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Sun Dec 10 15:47:52 2023 -0600
+
+    Added Sphinx for updating documentation.
+
+commit 081d3f843843745931351272ede9ce6481003895
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Sun Dec 10 15:36:41 2023 -0600
+
+    Fixed Makefile
+
+commit c88b9b91fe80f446a8f37ea1ed37dfed8d85db60
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Sun Dec 10 12:43:47 2023 -0600
+
+    Updated tree structure
+
+commit e8aedcfc0eb0a0ea2ea6ef27b558dd38d4c99652
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Sun Dec 10 12:36:21 2023 -0600
+
+    Updated todo list.
+
+commit 5a3ae912d04d868a3ca17ba68aca7345f951926b
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Sun Dec 10 12:32:43 2023 -0600
+
+    Updated .gitignore for comprehensive Node.js and Python coverage
+    
+    - Expanded .gitignore to include common Node.js and JavaScript ignore patterns such as node_modules, build directories, logs, and cache files.
+    - Combined existing Python-related ignore patterns with Node.js/JavaScript patterns for a unified approach.
+    - Added ignore entries for environment files, build outputs, and editor-specific files to prevent unnecessary files from being committed.
+    - Ensured comprehensive coverage to maintain a clean and focused repository, suitable for both Node.js and Python environments.
+    
+    This update optimizes the repository's configuration for a multi-language (JavaScript/Python) development environment, ensuring a cleaner and more manageable version control experience.
+
+commit 66b08eb7c81942c2cedd6afb2ccf7e2dfbc38d71
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Sun Dec 10 12:17:09 2023 -0600
+
+    Updated .gitignore
+
+commit 1f344b04865125f71b6e7dd9c8a8dc648c0af7d5
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Sat Dec 9 02:15:41 2023 -0600
+
+    Added custom API views for financial data analysis and updated URLs
+    
+    - Implemented `MonthlyOverview` view in `app/views.py` to aggregate and return total income and expenses for the current month.
+    - Created `SpendingByCategory` view to provide a breakdown of expenses by category, enhancing the analytical capabilities of the API.
+    - Developed `TrendAnalysis` view for displaying income and expense trends over time, offering users valuable insights into their financial patterns.
+    - Updated `app/urls.py` to include new API endpoints: `monthly-overview`, `spending-by-category`, and `trend-analysis`, ensuring easy access to these new data analysis features.
+    - Ensured all new views follow RESTful principles and are integrated seamlessly with the existing Django REST Framework setup.
+    
+    These updates significantly augment the backend's ability to deliver key financial data, paving the way for a comprehensive and interactive user experience in the frontend.
+
+commit 2b6853a49822e79a503bc0e137c888c5cc9532ff
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Sat Dec 9 01:31:48 2023 -0600
+
+    Implemented API integration for financial summary
+    
+    - Added a custom action 'financial_summary' to FinancialSettingsViewSet for serving a summarized view of financial data.
+    - Created a standalone APIView, FinancialSummaryView, for fetching financial summary data, providing flexibility in API design.
+    - Updated app/urls.py to include the new APIView alongside the default router configurations.
+    - Ensured the new endpoint 'financial-summary' is accessible and correctly returns the required financial data.
+    
+    These changes lay the groundwork for frontend integration, allowing for effective data retrieval and presentation of key financial insights.
+
+commit debf20c922e96503f078fb4bf77b783b82e7fdfb
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Fri Dec 8 12:10:47 2023 -0600
+
+    Refactored API views to use viewsets and updated API root
+    
+    - Converted SalaryList, BonusList, and TransactionsList to viewsets (SalaryViewSet, BonusViewSet, and TransactionsViewSet).
+    - Integrated the new viewsets into the Django REST Framework's DefaultRouter to streamline API endpoint registration.
+    - Ensured consistency across all API views by adopting the ModelViewSet approach, which provides a full range of actions for each model.
+    - Updated app/urls.py to include these viewsets in the routing system, making them accessible via the API root.
+    - Confirmed that all endpoints are now correctly displayed in the API root, improving API navigability and discoverability.
+    
+    These changes enhance the backend API structure, making it more efficient and scalable, and ready for seamless integration with the frontend.
+
+commit e1d7c6f1385bc8a214589621c614d273d7d25a33
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Fri Dec 8 11:21:45 2023 -0600
+
+    Added 'make tree' command to analyze and optimize project for DRY approach.
+
+commit efd003344920a836b640dcdd4dc8e69526f86940
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Fri Dec 8 11:09:28 2023 -0600
+
+    Implemented and passed unit tests for financial components
+    
+    - Developed comprehensive unit tests for the financial models including Salary, Bonus, and Transactions.
+    - Added test cases to validate the functionality of utility functions for financial analysis such as trend analysis and categorization of expenditures.
+    - Ensured accurate calculation and handling of financial data including salaried incomes and bonuses.
+    - Successfully ran a suite of 6 tests, covering key aspects of the financial component, all passing without errors.
+    - Enhanced the robustness and reliability of the financial features through thorough testing and validation.
+    
+    Next steps: Review code for optimization, update documentation, plan frontend integration, and consider CI/CD pipeline enhancements.
+
+commit ee55882f0c27b289b99b9ecee59dd1f6ed2e75f0
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Fri Dec 8 01:49:12 2023 -0600
+
+    Updated requirements.txt and README.md
+    
+    - Modified requirements.txt to include the latest package versions and necessary dependencies for the project.
+    - Refined README.md with an enhanced Tech Stack section, providing clear details on the specific technologies and versions used in the project.
+    - Added a formatted directory structure to README.md for a better overview of the project's organization, making it easier for new contributors to navigate the codebase.
+    - Incorporated updates in README.md to reflect the current progress, including completed and ongoing features, which offers a clearer picture of the project's development status.
+
+commit d45a322c71fb1be64753f7b359c83a801347f198
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Fri Dec 8 01:05:38 2023 -0600
+
+    Established foundation for Celery integration and task processing
+    
+    - Configured Celery in the Django project to manage asynchronous task execution.
+    - Installed and set up RabbitMQ as the message broker for Celery.
+    - Created celery.py in the main project directory to define the Celery application and its configuration.
+    - Integrated Celery with Django settings, ensuring proper loading and management of environment variables for RabbitMQ credentials.
+    - Added Celery configurations in settings.py, including the broker URL and other relevant settings.
+    - Implemented test Celery tasks to validate the setup and ensure tasks can be dispatched and processed correctly.
+    - Verified successful startup of Celery worker, confirming its readiness to receive and execute tasks.
+    - Ensured proper logging and debugging information in Celery worker output for monitoring and troubleshooting.
+
+commit 94201e9b8893f4ead2ed9173820e6886128f9e09
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Thu Dec 7 23:00:19 2023 -0600
+
+    Implemented backend features and prepared for Celery integration
+    
+    - Developed and tested Django views for financial data, including integration with the YNAB API.
+    - Established financial data processing logic to analyze and categorize transactions based on user-defined settings in FinancialSettings.
+    - Created infrastructure for scheduled tasks using Celery, including installation and initial configuration, to enable automated financial data updates.
+    - Prepared for the implementation of message broker (RabbitMQ) for Celery to handle task scheduling effectively.
+    - Laid groundwork for periodic tasks and asynchronous processing to maintain up-to-date financial data.
+
+commit 73ce3828e2aba313d156698b723decfd20b98349
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Thu Dec 7 22:36:32 2023 -0600
+
+    Created API endpoints for FinancialSettings and Transaction models
+    
+    - Installed Django REST Framework and added it to INSTALLED_APPS in settings.py.
+    - Created serializers for FinancialSettings and Transaction models in serializers.py.
+    - Developed viewsets for FinancialSettings and Transaction in views.py, providing CRUD operations for these models via API endpoints.
+    - Set up URL routing in urls.py using DRF's DefaultRouter to register the new viewsets and define API paths.
+    - Successfully tested the API endpoints for both FinancialSettings and Transaction models to ensure they handle CRUD operations correctly.
+
+commit a05903dbb0052d7f8744920729868c3f906ea284
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Wed Dec 6 17:26:16 2023 -0600
+
+    - Registered `FinancialSettings` and `Transaction` models in `admin.py` for easy management via Django's admin interface.
+
+commit 8d3380cf37a93c560bb45b43f98463b7983fc3ee
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Wed Dec 6 17:19:17 2023 -0600
+
+    Implemented FinancialSettings and Transaction models
+    
+    - Created new model 'FinancialSettings' in 'app/models/financial_settings.py' to store user financial settings such as minimum account balance and budget thresholds.
+    - Developed 'Transaction' model in 'app/models/transactions.py' for storing transaction data like date, amount, and category.
+    - Updated 'app/models/__init__.py' to import the new FinancialSettings and Transaction models, ensuring they are recognized by Django.
+    - Generated and applied new database migrations for the FinancialSettings and Transaction models.
+
+commit 5474a48c81806d47e196da3a1551e8b71d7c6e2c
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Sun Dec 3 12:19:30 2023 -0600
+
+    Removed models.py as model definitions have been moved to separate files
+
+commit c63701a94d3453f0d32d8e9b6297a0cbb30cc805
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Sun Dec 3 12:04:16 2023 -0600
+
+    Added unit testing folder in app/tests.
+
+commit 0bec68e25755c92f34cd8ebbb1fa5094e36a8801
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Sun Dec 3 11:43:23 2023 -0600
+
+    Moved Django SECRET_KEY to environment variables and updated .env.example
+
+commit 13b96d9de92419b6763bc6f92259c2060b65424f
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Sun Dec 3 09:47:11 2023 -0600
+
+    Added .env.example and .env to .gitignore
+
+commit ca6f7affbc684a21cd7743bac36ce9e3df6d493a
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Sun Dec 3 09:22:38 2023 -0600
+
+    Updated checklist
+
+commit 054721f41a34dbef8e76ceee347c31ef73f3aec3
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Sun Dec 3 09:18:09 2023 -0600
+
+    Implemented React frontend setup and added a dependency fix
+    
+    - Initialized the React application using Create React App in the 'frontend' directory.
+    - Created the 'UserProfileComponent' in 'src/components/UserProfileComponent.js'.
+    - Integrated 'UserProfileComponent' into 'src/App.js' to display user profile data.
+    - Added 'useUserProfiles' custom hook in 'src/hooks/useUserProfiles.js' for fetching user profile data from the Django backend.
+    - Installed '@babel/plugin-proposal-private-property-in-object' as a dev dependency to address a dependency warning related to 'babel-preset-react-app'.
+    - Ensured the frontend successfully compiles and loads user profile data.
+
+commit 122254c4b8e31d1e9789d797b5dc88e62b5e8bf3
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Fri Dec 1 21:39:34 2023 -0600
+
+    Updated project structure in README.md.
+
+commit a18a71479fadf835695d6a88f03008468e53ca55
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Fri Dec 1 21:34:29 2023 -0600
+
+    Added serializers and implemented root URL redirection
+    
+    - Created `serializers.py` in the app directory for model serialization.
+    - Defined serializers for models like UserProfile, Schedule, etc.
+    - Created a new file `harmonydash/views.py` for the project-level views.
+    - Added a `root_redirect` view in `harmonydash/views.py` to handle redirection from the root URL.
+    - Updated `harmonydash/urls.py` to include a redirect from the root path (`''`) to `/api/userprofiles/`.
+    - Conducted successful testing of the new URL redirection and serializers.
+
+commit 43cc7efe681658b68b092153e71355f24fb8eb74
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Fri Dec 1 20:49:45 2023 -0600
+
+    Added basic views and URL configurations
+    
+    - Created initial views in app/views.py, including a simple home view.
+    - Set up URL patterns in app/urls.py to route requests to the new views.
+    - Updated the project's main urls.py (in harmonydash/urls.py) to include URL patterns from the app.
+    - Conducted preliminary testing of the views and URLs to ensure correct routing and response.
+
+commit 8fb9f01b3c9182cad78d34e7341c6a69bb0dca40
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Fri Dec 1 15:12:48 2023 -0600
+
+    Implemented separate model files and added Makefile for automation
+    
+    - Created individual model files: user_profile.py, schedule.py, financial_info.py, task.py.
+    - Imported these models into app/models.py for Django to recognize them.
+    - Ensured app is included in INSTALLED_APPS in the settings.py.
+    - Added a Makefile to automate common Django tasks like running the server, making and applying migrations, opening Django shell, and running tests.
+    - Adjusted project README.md to reflect the updated project structure and include the Makefile.
+
+commit 94137b98e81e96ade99c99140f028e468e608392
+Author: jdcundiff <jd_cundiff@outlook.com>
+Date:   Fri Dec 1 11:44:28 2023 -0600
+
+    Initial setup of Django project 'harmonydash'
+    
+    - Cloned existing Git repository and configured project directory.
+    - Created and activated a Python virtual environment.
+    - Installed Django and established the 'harmonydash' project structure.
+    - Created a basic Django app named 'app'.
+    - Configured 'harmonydash' settings including INSTALLED_APPS.
+    - Initialized database with default Django models.
+
+commit c21975895648e10d1604bd5254d6e4daf743d444
+Author: JD Cundiff <jdcundiff14@gmail.com>
+Date:   Fri Dec 1 11:15:00 2023 -0600
+
+    Update README.md
+
+commit 0ef004626f64979bd813c5ae5dafaec4e5b06ea9
+Author: JD Cundiff <jdcundiff14@gmail.com>
+Date:   Fri Dec 1 11:06:10 2023 -0600
+
+    Update README.md
+
+commit e57938e839c067bdf14e54038dcac3f9240df662
+Author: JD Cundiff <jdc9v@mtmail.mtsu.edu>
+Date:   Fri Dec 1 11:03:24 2023 -0600
+
+    Initial commit
