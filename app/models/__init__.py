@@ -7,4 +7,5 @@ from .financial_settings import FinancialSettings
 from .transactions import Transaction
 from .salary import Salary
 from .bonus import Bonus
+from .account import Account
 # Import other models as necessary

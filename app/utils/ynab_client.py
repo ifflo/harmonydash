@@ -1,7 +1,7 @@
 # app/utils/ynab_client.py
 import requests
 from urllib.parse import urljoin
-from app.models import FinancialSettings
+from app.models import Transaction, Account
 
 
 class YNABClient:
@@ -16,23 +16,48 @@ class YNABClient:
     def sync_ynab_data(self):
         """Synchronize data from the YNAB API."""
         try:
-            # Step 1: Fetch data from YNAB
+            # Sync budgets
             budgets = self.get_budgets()['data']['budgets']
 
-            # Step 2: Process and integrate budgets into your Django models
+            # Sync transactions
             for budget in budgets:
-                # Example: Update or create budget in your Django model
-                # Adjust the logic based on how your models are set up
-                FinancialSettings.objects.update_or_create(
-                    budget_id=budget['id'],
-                    defaults={
-                        'budget_name': budget['name'],
-                        # ... other fields if necessary ...
-                    }
-                )
+                transactions = self.get_transactions(budget['id'])['data']['transactions']
+                for transaction_data in transactions:
+                    # Assuming you have a method to determine the user from transaction data
+                    user_instance = self.get_user_for_transaction(transaction_data)
+
+                    transaction, created = Transaction.objects.update_or_create(
+                        ynab_id=transaction_data['id'],
+                        defaults={
+                            'user': user_instance,  # Set the user for the transaction
+                            'date': transaction_data['date'],
+                            'amount': transaction_data['amount'],
+                            'memo': transaction_data.get('memo'),
+                            # include other necessary fields
+                        }
+                    )
+                    if created:
+                        print(f"Created new transaction: {transaction.ynab_id}")
+                    else:
+                        print(f"Updated existing transaction: {transaction.ynab_id}")
+
+            # Sync accounts
+            for budget in budgets:
+                accounts = self.get_accounts(budget['id'])['data']['accounts']
+                for account_data in accounts:
+                    Account.objects.update_or_create(
+                        ynab_id=account_data['id'],
+                        defaults={
+                            'name': account_data['name'],
+                            'type': account_data['type'],
+                            'balance': account_data['balance'],
+                            # map other fields
+                        }
+                    )
+            # Logic to update or create accounts in your Django model
+
             print("YNAB data synchronized successfully.")
         except Exception as e:
-            # Step 3: Error Handling
             print(f"Error during YNAB data synchronization: {e}")
 
     def _get(self, endpoint):
@@ -83,4 +108,9 @@ class YNABClient:
     def get_categories(self, budget_id):
         """Fetch categories for a specific budget."""
         endpoint = f'budgets/{budget_id}/categories'
+        return self._get(endpoint)
+
+    def get_accounts(self, budget_id):
+        """Fetch account information for a specific budget."""
+        endpoint = f'budgets/{budget_id}/accounts'
         return self._get(endpoint)

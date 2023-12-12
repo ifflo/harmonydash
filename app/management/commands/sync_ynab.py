@@ -1,7 +1,7 @@
 # app/management/commands/sync_ynab.py
 
 from django.core.management.base import BaseCommand
-from ...utils.ynab_client import YNABClient
+from app.utils.ynab_client import YNABClient
 from django.conf import settings
 
 
