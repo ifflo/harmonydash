@@ -1,86 +1,299 @@
 # app/utils/ynab_client.py
 import requests
 from urllib.parse import urljoin
+
 from app.models import FinancialSettings
+import ynab_api
+from pprint import pprint
+from ynab_api.api import accounts_api, budgets_api, months_api, categories_api, transactions_api, \
+    scheduled_transactions_api, user_api, payees_api, payee_locations_api
+from django.conf import settings
 
 
 class YNABClient:
-    def __init__(self, api_key):
-        self.base_url = 'https://api.ynab.com/v1/'
-        self.api_key = api_key
-        self.headers = {
-            'Authorization': f'Bearer {api_key}',
-            'Content-Type': 'application/json'
-        }
+    def __init__(self, api_key=None):
+        self.api_key = api_key or settings.YNAB_API_KEY
+        self.configuration = ynab_api.Configuration(
+            host="https://api.ynab.com/v1"
+        )
+        self.configuration.api_key['bearer'] = self.api_key
+        self.api_client = ynab_api.ApiClient(self.configuration)
 
-    def sync_ynab_data(self):
-        """Synchronize data from the YNAB API."""
-        try:
-            # Step 1: Fetch data from YNAB
-            budgets = self.get_budgets()['data']['budgets']
-
-            # Step 2: Process and integrate budgets into your Django models
-            for budget in budgets:
-                # Example: Update or create budget in your Django model
-                # Adjust the logic based on how your models are set up
-                FinancialSettings.objects.update_or_create(
-                    budget_id=budget['id'],
-                    defaults={
-                        'budget_name': budget['name'],
-                        # ... other fields if necessary ...
-                    }
-                )
-            print("YNAB data synchronized successfully.")
-        except Exception as e:
-            # Step 3: Error Handling
-            print(f"Error during YNAB data synchronization: {e}")
-
-    def _get(self, endpoint):
-        """Generic GET request handler."""
-        url = urljoin(self.base_url, endpoint)
-        response = requests.get(url, headers=self.headers)
-        response.raise_for_status()
-        return response.json()
-
-    def _post(self, endpoint, data):
-        """Generic POST request handler."""
-        url = urljoin(self.base_url, endpoint)
-        response = requests.post(url, headers=self.headers, json=data)
-        response.raise_for_status()
-        return response.json()
-
-    def _put(self, endpoint, data):
-        """Generic PUT request handler."""
-        url = urljoin(self.base_url, endpoint)
-        response = requests.put(url, headers=self.headers, json=data)
-        response.raise_for_status()
-        return response.json()
+    def close(self):
+        self.api_client.close()
 
     def get_budgets(self):
-        """Fetch all budgets."""
-        return self._get('budgets')['data']['budgets']
+        """Retrieve a list of budgets."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = budgets_api.BudgetsApi(api_client)
+            try:
+                api_response = api_instance.get_budgets()
+                return api_response.data.budgets
+            except ynab_api.ApiException as e:
+                print("Exception when calling BudgetsApi->get_budgets: %s\n" % e)
+                return None
 
-    def get_budget_details(self, budget_id):
-        """Fetch details of a specific budget."""
-        endpoint = f'budgets/{budget_id}'
-        return self._get(endpoint)
+    def get_budget_months(self, budget_id):
+        """Retrieve all months for a given budget."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = months_api.MonthsApi(api_client)
+            try:
+                api_response = api_instance.get_budget_months(budget_id)
+                return api_response.data.months
+            except ynab_api.ApiException as e:
+                print("Exception when calling MonthsApi->get_budget_months: %s\n" % e)
+                return None
 
-    def get_transactions(self, budget_id):
-        """Fetch transactions for a specific budget."""
-        endpoint = f'budgets/{budget_id}/transactions'
-        return self._get(endpoint)
+    def get_budget_month(self, budget_id, month):
+        """Retrieve a specific month's budget details."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = months_api.MonthsApi(api_client)
+            try:
+                api_response = api_instance.get_budget_month(budget_id, month)
+                return api_response.data.month
+            except ynab_api.ApiException as e:
+                print("Exception when calling MonthsApi->get_budget_month: %s\n" % e)
+                return None
 
-    def create_transaction(self, budget_id, transaction_data):
-        """Create a new transaction for a specific budget."""
-        endpoint = f'budgets/{budget_id}/transactions'
-        return self._post(endpoint, transaction_data)
-
-    def update_transaction(self, budget_id, transaction_id, updated_data):
-        """Update an existing transaction for a specific budget."""
-        endpoint = f'budgets/{budget_id}/transactions/{transaction_id}'
-        return self._put(endpoint, updated_data)
+    def get_budget_settings_by_id(self, budget_id):
+        """Retrieve the settings for a specific budget."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = budgets_api.BudgetsApi(api_client)
+            try:
+                api_response = api_instance.get_budget_settings_by_id(budget_id)
+                return api_response.data.settings
+            except ynab_api.ApiException as e:
+                print("Exception when calling BudgetsApi->get_budget_settings_by_id: %s\n" % e)
+                return None
 
     def get_categories(self, budget_id):
-        """Fetch categories for a specific budget."""
-        endpoint = f'budgets/{budget_id}/categories'
-        return self._get(endpoint)
+        """Retrieve all categories for a given budget."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = categories_api.CategoriesApi(api_client)
+            try:
+                api_response = api_instance.get_categories(budget_id)
+                return api_response.data.category_groups
+            except ynab_api.ApiException as e:
+                print("Exception when calling CategoriesApi->get_categories: %s\n" % e)
+                return None
+
+    def update_month_category(self, budget_id, month, category_id, category_data):
+        """Update a category for a specific month."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = categories_api.CategoriesApi(api_client)
+            try:
+                api_response = api_instance.update_month_category(budget_id, month, category_id, category_data)
+                return api_response.data.category
+            except ynab_api.ApiException as e:
+                print("Exception when calling CategoriesApi->update_month_category: %s\n" % e)
+                return None
+
+    def get_accounts(self, budget_id):
+        """Retrieve accounts for a given budget."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = accounts_api.AccountsApi(api_client)
+            try:
+                api_response = api_instance.get_accounts(budget_id)
+                return api_response.data.accounts
+            except ynab_api.ApiException as e:
+                print("Exception when calling AccountsApi->get_accounts: %s\n" % e)
+                return None
+
+    def create_transaction(self, budget_id, transaction_data):
+        """Create a new transaction."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = transactions_api.TransactionsApi(api_client)
+            data = transactions_api.SaveTransactionsWrapper(transaction=transaction_data)
+            try:
+                api_response = api_instance.create_transaction(budget_id, data)
+                return api_response.data.transaction
+            except ynab_api.ApiException as e:
+                print("Exception when calling TransactionsApi->create_transaction: %s\n" % e)
+                return None
+
+    def get_transactions(self, budget_id):
+        """Retrieve transactions for a given budget."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = transactions_api.TransactionsApi(api_client)
+            try:
+                api_response = api_instance.get_transactions(budget_id)
+                return api_response.data.transactions
+            except ynab_api.ApiException as e:
+                print("Exception when calling TransactionsApi->get_transactions: %s\n" % e)
+                return None
+
+    def get_category_by_id(self, budget_id, category_id):
+        """Retrieve a single category by its ID."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = categories_api.CategoriesApi(api_client)
+            try:
+                api_response = api_instance.get_category_by_id(budget_id, category_id)
+                return api_response.data.category
+            except ynab_api.ApiException as e:
+                print("Exception when calling CategoriesApi->get_category_by_id: %s\n" % e)
+                return None
+
+    def get_transactions_by_category(self, budget_id, category_id):
+        """Retrieve transactions for a specific category."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = transactions_api.TransactionsApi(api_client)
+            try:
+                api_response = api_instance.get_transactions_by_category(budget_id, category_id)
+                return api_response.data.transactions
+            except ynab_api.ApiException as e:
+                print("Exception when calling TransactionsApi->get_transactions_by_category: %s\n" % e)
+                return None
+
+    def get_scheduled_transaction_by_id(self, budget_id, scheduled_transaction_id):
+        """Retrieve a single scheduled transaction by its ID."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = scheduled_transactions_api.ScheduledTransactionsApi(api_client)
+            try:
+                api_response = api_instance.get_scheduled_transaction_by_id(budget_id, scheduled_transaction_id)
+                return api_response.data.scheduled_transaction
+            except ynab_api.ApiException as e:
+                print("Exception when calling ScheduledTransactionsApi->get_scheduled_transaction_by_id: %s\n" % e)
+                return None
+
+    def get_scheduled_transactions(self, budget_id):
+        """Retrieve all scheduled transactions for a given budget."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = scheduled_transactions_api.ScheduledTransactionsApi(api_client)
+            try:
+                api_response = api_instance.get_scheduled_transactions(budget_id)
+                return api_response.data.scheduled_transactions
+            except ynab_api.ApiException as e:
+                print("Exception when calling ScheduledTransactionsApi->get_scheduled_transactions: %s\n" % e)
+                return None
+
+    def update_transaction(self, budget_id, transaction_id, transaction_data):
+        """Update an existing transaction."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = transactions_api.TransactionsApi(api_client)
+            try:
+                api_response = api_instance.update_transaction(budget_id, transaction_id, transaction_data)
+                return api_response.data.transaction
+            except ynab_api.ApiException as e:
+                print("Exception when calling TransactionsApi->update_transaction: %s\n" % e)
+                return None
+
+    def get_transactions_by_account(self, budget_id, account_id):
+        """Retrieve transactions for a specific account."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = transactions_api.TransactionsApi(api_client)
+            try:
+                api_response = api_instance.get_transactions_by_account(budget_id, account_id)
+                return api_response.data.transactions
+            except ynab_api.ApiException as e:
+                print("Exception when calling TransactionsApi->get_transactions_by_account: %s\n" % e)
+                return None
+
+    def get_user(self):
+        """Retrieve user information."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = user_api.UserApi(api_client)
+            try:
+                api_response = api_instance.get_user()
+                return api_response.data.user
+            except ynab_api.ApiException as e:
+                print("Exception when calling UserApi->get_user: %s\n" % e)
+                return None
+
+    def get_transactions_by_payee(self, budget_id, payee_id):
+        """Retrieve transactions for a specific payee."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = transactions_api.TransactionsApi(api_client)
+            try:
+                api_response = api_instance.get_transactions_by_payee(budget_id, payee_id)
+                return api_response.data.transactions
+            except ynab_api.ApiException as e:
+                print("Exception when calling TransactionsApi->get_transactions_by_payee: %s\n" % e)
+                return None
+
+    def get_payee_by_id(self, budget_id, payee_id):
+        """Retrieve a single payee by its ID."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = payees_api.PayeesApi(api_client)
+            try:
+                api_response = api_instance.get_payee_by_id(budget_id, payee_id)
+                return api_response.data.payee
+            except ynab_api.ApiException as e:
+                print("Exception when calling PayeesApi->get_payee_by_id: %s\n" % e)
+                return None
+
+    def import_transactions(self, budget_id):
+        """Import transactions."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = transactions_api.TransactionsApi(api_client)
+            try:
+                api_response = api_instance.import_transactions(budget_id)
+                return api_response.data.transaction_ids
+            except ynab_api.ApiException as e:
+                print("Exception when calling TransactionsApi->import_transactions: %s\n" % e)
+                return None
+
+    def update_transactions(self, budget_id, transactions_data):
+        """Update multiple transactions."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = transactions_api.TransactionsApi(api_client)
+            try:
+                api_response = api_instance.update_transactions(budget_id, transactions_data)
+                return api_response.data.transactions
+            except ynab_api.ApiException as e:
+                print("Exception when calling TransactionsApi->update_transactions: %s\n" % e)
+                return None
+
+    def get_payees(self, budget_id):
+        """Retrieve a list of all payees for a budget."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = payees_api.PayeesApi(api_client)
+            try:
+                api_response = api_instance.get_payees(budget_id)
+                return api_response.data.payees
+            except ynab_api.ApiException as e:
+                print("Exception when calling PayeesApi->get_payees: %s\n" % e)
+                return None
+
+    def get_payee_locations(self, budget_id):
+        """Retrieve a list of all payee locations for a budget."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = payee_locations_api.PayeeLocationsApi(api_client)
+            try:
+                api_response = api_instance.get_payee_locations(budget_id)
+                return api_response.data.payee_locations
+            except ynab_api.ApiException as e:
+                print("Exception when calling PayeeLocationsApi->get_payee_locations: %s\n" % e)
+                return None
+
+    def get_payee_locations_by_payee(self, budget_id, payee_id):
+        """Retrieve a list of all locations for a specific payee."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = payee_locations_api.PayeeLocationsApi(api_client)
+            try:
+                api_response = api_instance.get_payee_locations_by_payee(budget_id, payee_id)
+                return api_response.data.payee_locations
+            except ynab_api.ApiException as e:
+                print("Exception when calling PayeeLocationsApi->get_payee_locations_by_payee: %s\n" % e)
+                return None
+
+    def get_payee_location_by_id(self, budget_id, payee_location_id):
+        """Retrieve details of a specific payee location."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = payee_locations_api.PayeeLocationsApi(api_client)
+            try:
+                api_response = api_instance.get_payee_location_by_id(budget_id, payee_location_id)
+                return api_response.data.payee_location
+            except ynab_api.ApiException as e:
+                print("Exception when calling PayeeLocationsApi->get_payee_location_by_id: %s\n" % e)
+                return None
+
+    def get_transaction_by_id(self, budget_id, transaction_id):
+        """Retrieve details of a specific transaction."""
+        with ynab_api.ApiClient(self.configuration) as api_client:
+            api_instance = transactions_api.TransactionsApi(api_client)
+            try:
+                api_response = api_instance.get_transaction_by_id(budget_id, transaction_id)
+                return api_response.data.transaction
+            except ynab_api.ApiException as e:
+                print("Exception when calling TransactionsApi->get_transaction_by_id: %s\n" % e)
+                return None
