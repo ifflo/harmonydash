@@ -15,5 +15,11 @@ def update_financial_data(user_id):
 @shared_task
 def update_transactions():
     ynab_client = YNABClient()
-    transactions = ynab_client.fetch_transactions()
-    # Process and store transactions
+    try:
+        # Replace 'budget_id_example' with the actual budget ID
+        transactions = ynab_client.get_transactions('budget_id_example')
+        # Process and store transactions
+        # Add your logic here to handle transactions
+    except Exception as e:
+        # Handle exceptions (e.g., log error)
+        print(f"Error updating transactions: {e}")

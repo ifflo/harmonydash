@@ -1,8 +1,5 @@
 from django.test import TestCase
 from app.models import Transaction, Salary, Bonus
-from app.utils.financial_analysis import (calculate_monthly_expenses,
-                                          calculate_monthly_income,
-                                          calculate_spending_by_category)
 from django.contrib.auth.models import User
 from datetime import date
 from decimal import Decimal

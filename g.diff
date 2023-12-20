@@ -1,0 +1,21 @@
+ app/admin.py                          |  35 +++---
+ app/management/commands/sync_ynab.py  |   9 +-
+ app/models/__init__.py                |  12 +-
+ app/models/home.py                    |  11 ++
+ app/models/home_bills.py              |   4 +-
+ app/models/home_financial_settings.py |   8 +-
+ app/models/home_settings.py           |  13 ++
+ app/models/home_tasks.py              |   4 +-
+ app/models/user_salary.py             |   2 +-
+ app/models/user_schedule.py           |   3 +-
+ app/serializers.py                    |  30 +----
+ app/tasks.py                          |  10 +-
+ app/tests/test_financial.py           |   3 -
+ app/urls.py                           |  15 +--
+ app/utils/financial_analysis.py       |  52 +-------
+ app/utils/ynab_client.py              |  37 +++++-
+ app/views.py                          |  71 ++---------
+ g.diff                                | 218 ----------------------------------
+ history.txt                           |  41 +++++++
+ tree_structure.txt                    |   7 +-
+ 20 files changed, 181 insertions(+), 404 deletions(-)

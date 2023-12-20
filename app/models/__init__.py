@@ -1,10 +1,8 @@
 # app/models/__init__.py
-from .financial_info import FinancialInfo
-from .schedule import Schedule
+from .home_bills import HomeBills
+from .user_schedule import UserSchedule
 from .user_profile import UserProfile
-from .task import Task
-from .financial_settings import FinancialSettings
-from .transactions import Transaction
-from .salary import Salary
-from .bonus import Bonus
+from .home_tasks import HomeTasks
+from .home_financial_settings import HomeFinancialSettings
+from .user_salary import UserSalary
 # Import other models as necessary

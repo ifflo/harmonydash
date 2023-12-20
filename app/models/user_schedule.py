@@ -1,9 +1,9 @@
 from django.db import models
-from .user_profile import UserProfile
+from django.contrib.auth.models import User
 
 
-class Schedule(models.Model):
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+class UserSchedule(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     day = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()

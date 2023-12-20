@@ -5,11 +5,15 @@
 │   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
+│   ├── management
+│   │   └── commands
 │   ├── migrations
 │   │   ├── 0001_initial.py
 │   │   ├── 0002_transaction_financialsettings.py
 │   │   ├── 0003_salary_bonus.py
 │   │   ├── 0004_transaction_transaction_type.py
+│   │   ├── 0005_financialsettings_budget_id.py
+│   │   ├── 0006_financialsettings_budget_name.py
 │   │   └── __init__.py
 │   ├── models
 │   │   ├── __init__.py
@@ -91,6 +95,7 @@
 ├── package-lock.json
 ├── package.json
 ├── requirements.txt
+├── sync_error.txt
 └── tree_structure.txt
 
-21 directories, 73 files
+23 directories, 76 files
