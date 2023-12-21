@@ -1,4 +1,5 @@
 # app/models/__init__.py
+from .home import Home
 from .home_bills import HomeBills
 from .user_schedule import UserSchedule
 from .user_profile import UserProfile

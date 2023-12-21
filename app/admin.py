@@ -2,12 +2,13 @@
 import logging
 
 from django.contrib import admin
-from .models import HomeBills, HomeFinancialSettings, UserSalary, UserSchedule, HomeTasks, UserProfile
+from .models import Home, HomeBills, HomeFinancialSettings, UserSalary, UserSchedule, HomeTasks, UserProfile
 from django import forms
 from .utils.ynab_client import YNABClient
 from django.conf import settings
 
 # Register your models here.
+admin.site.register(Home)
 admin.site.register(HomeBills)
 admin.site.register(HomeFinancialSettings)
 admin.site.register(UserSalary)
