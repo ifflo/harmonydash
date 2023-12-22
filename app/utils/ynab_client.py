@@ -4,6 +4,7 @@ from urllib.parse import urljoin
 import traceback
 from app.models import HomeFinancialSettings
 import ynab_api
+import requests
 from pprint import pprint
 from ynab_api.model.error_response import ErrorResponse
 from ynab_api.model.budget_summary_response import BudgetSummaryResponse
@@ -15,15 +16,7 @@ from django.conf import settings
 class YNABClient:
     def __init__(self, api_key=None):
         self.api_key = api_key or settings.YNAB_API_KEY
-        self.configuration = ynab_api.Configuration(
-            host="https://api.ynab.com/v1"
-        )
-        self.configuration.api_key['bearer'] = self.api_key
-        self.configuration.api_key_prefix['bearer'] = 'Bearer'
-        self.api_client = ynab_api.ApiClient(self.configuration)
-
-    def close(self):
-        self.api_client.close()
+        self.api_base_url = "https://api.ynab.com/v1"
 
     def sync_ynab_data(self):
         """Synchronize data from the YNAB API."""
@@ -51,17 +44,22 @@ class YNABClient:
             print(traceback.format_exc())
 
     def get_budgets(self):
-        """Retrieve a list of budgets."""
-        with ynab_api.ApiClient(self.configuration) as api_client:
-            api_instance = budgets_api.BudgetsApi(api_client)
-            include_accounts = True
-            try:
-                api_response = api_instance.get_budgets(include_accounts=include_accounts)
-                return api_response
-            except ynab_api.ApiException as e:
-                print("Exception when calling BudgetsApi->get_budgets: %s\n" % e)
-                return None
+        url = f"{self.api_base_url}/budgets"
+        response = requests.get(url, headers=self.get_headers())
+        return response.json()
 
+    def get_transactions(self, budget_id):
+        url = f"{self.api_base_url}/budgets/{budget_id}/transactions"
+        response = requests.get(url, headers=self.get_headers())
+        return response.json()
+
+    def get_headers(self):
+        return {
+            "Authorization": f"Bearer {self.api_key}"
+        }
+
+
+'''
     def get_budget_months(self, budget_id):
         """Retrieve all months for a given budget."""
         with ynab_api.ApiClient(self.configuration) as api_client:
@@ -138,17 +136,6 @@ class YNABClient:
                 return api_response.data.transaction
             except ynab_api.ApiException as e:
                 print("Exception when calling TransactionsApi->create_transaction: %s\n" % e)
-                return None
-
-    def get_transactions(self, budget_id):
-        """Retrieve transactions for a given budget."""
-        with ynab_api.ApiClient(self.configuration) as api_client:
-            api_instance = transactions_api.TransactionsApi(api_client)
-            try:
-                api_response = api_instance.get_transactions(budget_id)
-                return api_response.data.transactions
-            except ynab_api.ApiException as e:
-                print("Exception when calling TransactionsApi->get_transactions: %s\n" % e)
                 return None
 
     def get_category_by_id(self, budget_id, category_id):
@@ -325,4 +312,4 @@ class YNABClient:
                 return api_response.data.transaction
             except ynab_api.ApiException as e:
                 print("Exception when calling TransactionsApi->get_transaction_by_id: %s\n" % e)
-                return None
+                return None'''

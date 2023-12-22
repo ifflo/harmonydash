@@ -12,11 +12,24 @@ from .utils.financial_analysis import analyze_transactions
 from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from .utils.ynab_client import YNABClient
+from django.conf import settings
+import requests
 from django.db.models import Sum, Q
 from django.utils import timezone
 
 
 # Existing ViewSets
+class YNABProxyView(APIView):
+    def get(self, request, endpoint, *args, **kwargs):
+        ynab_client = YNABClient()
+        try:
+            budget_data = ynab_client.get_budgets()
+            return Response(budget_data)
+        except Exception as e:
+            return Response({"error": str(e)}, status=400)
+
+
 class UserProfileList(generics.ListCreateAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer

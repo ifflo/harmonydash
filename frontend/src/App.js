@@ -1,28 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
-import UserProfileComponent from './components/UserProfileComponent';
-import MonthlyOverview from './components/MonthlyOverview';
-import SpendingByCategory from './components/SpendingByCategory';
-import TrendAnalysis from './components/TrendAnalysis';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-
+// App.js
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container, Navbar, Row, Col } from 'react-bootstrap';
+import YNABDataFetcher from './components/YNABDataFetcher';
 
 function App() {
-  return (
-    <Container>
-            <Row>
-                <Col><MonthlyOverview income={1000} expenses={500} /></Col>
-            </Row>
-            <Row>
-                <Col><SpendingByCategory categories={[/* categories data */]} /></Col>
-            </Row>
-            <Row>
-                <Col><TrendAnalysis trends={[/* trends data */]} /></Col>
-            </Row>
-        </Container>
-  );
+    return (
+        <div className="App">
+            <Navbar bg="dark" variant="dark">
+                <Container>
+                    <Navbar.Brand href="#home">Harmony Dashboard</Navbar.Brand>
+                </Container>
+            </Navbar>
+            <Container>
+                <Row className="justify-content-md-center">
+                    <Col md="auto">
+                        <YNABDataFetcher />
+                    </Col>
+                </Row>
+            </Container>
+        </div>
+    );
 }
 
 export default App;

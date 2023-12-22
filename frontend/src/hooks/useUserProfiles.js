@@ -1,6 +1,6 @@
 // src/hooks/useUserProfiles.js
 import { useState, useEffect } from 'react';
-import { getUserProfiles } from '../apiService';
+import { getUserProfiles } from '../services/apiService';
 
 const useUserProfiles = () => {
     const [userProfiles, setUserProfiles] = useState([]);
